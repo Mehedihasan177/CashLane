@@ -1,0 +1,1 @@
+String apiDomainRoot = "http://payment.zuzasif.info";
