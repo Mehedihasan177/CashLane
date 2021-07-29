@@ -11,7 +11,7 @@ class SendMoneyController{
     Map data1 = {
       'username': "${username}",
       'amount': "${amount}",
-      // 'note': "${note}",
+      'note': "${note}",
     };
     print(data1);
     var response = await http.post(Uri.parse(url), body: data1,

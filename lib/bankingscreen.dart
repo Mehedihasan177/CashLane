@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
+import 'package:sharedpreference/sentMoney/sentMoneySuccessfullPage.dart';
 import 'package:sharedpreference/sentMoney/sent_money_controller.dart';
 
 import 'dropdownbankingscreen.dart';
@@ -285,6 +286,10 @@ class _BankingScreenState extends State<BankingScreen> {
       setState(() {
         print(response.statusCode);
         print(response.body);
+
+        if(response.statusCode==200){
+          Get.to(AddMoneySuccessfullPage());
+        }
 
       });
     });

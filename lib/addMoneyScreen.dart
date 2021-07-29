@@ -273,7 +273,7 @@ class _DesignpositionState extends State<Designposition> {
                 ),
                 onPressed: () async{
 
-                  Get.to(AddMoneySuccessfullPage());
+                  // Get.to(AddMoneySuccessfullPage());
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xfff9A825),

@@ -45,6 +45,7 @@ class _NotificationsState extends State<Notifications> {
 
   @override
   Widget build(BuildContext context) {
+    datumlist = datumlist.reversed.toList();
     return Scaffold(
         body: SafeArea(
       child: Column(
