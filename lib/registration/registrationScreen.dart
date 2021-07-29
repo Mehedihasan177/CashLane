@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sharedpreference/Login/login.dart';
 import 'package:sharedpreference/registration/registraion_controller.dart';
 import 'package:sharedpreference/registration/reg_requst_model.dart';
 
@@ -371,7 +373,7 @@ class Registration extends StatelessWidget {
                 // width: MediaQuery.of(context).size.width * 0.91,
                 child: FlatButton(
                   onPressed: () {
-                    //Get.to(LoginPage());
+                    Get.to(LoginPage());
                   },
                   child: RichText(
                     text: TextSpan(

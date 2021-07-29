@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sharedpreference/Login/login_model.dart';
 import 'package:sharedpreference/Login/login_response.dart';
+import 'package:sharedpreference/bottomnevigation/bottomnevigation.dart';
 import 'package:sharedpreference/constents/constant.dart';
 import 'package:sharedpreference/Login/login_controller.dart';
 import 'package:sharedpreference/homepage.dart';
@@ -172,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                     sharedPreferences.setString("password", _textPassword.text);
                     return Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
+                    MaterialPageRoute(builder: (context) => BottomNevigation()),
                   );
                   } else {
                     return LoginController.requestThenResponsePrint(jsonData);
@@ -197,18 +198,8 @@ class _LoginPageState extends State<LoginPage> {
             height: MediaQuery.of(context).size.height * 0.03,
             width: MediaQuery.of(context).size.width * 1,
             child: FlatButton(
-              onPressed: () async{
-                                      LoginModel myInfo = new LoginModel(
-                    email: _textEmail.text, password: _textPassword.text);
-                await LoginController.requestThenResponsePrint(myInfo)
-                    .then((value) async{
-                     print(value.statusCode);
-                     print(value.body);
-                     final Map parsed = json.decode(value.body); 
-
-                     final loginobject = LoginResponse.fromJson(parsed);
-                     print(loginobject.accessToken);
-                });
+              onPressed: () {
+                            Get.to(Registration());
               },
               child: RichText(
                 text: TextSpan(
