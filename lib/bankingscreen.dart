@@ -24,17 +24,17 @@ class BankingScreen extends StatefulWidget {
 class _BankingScreenState extends State<BankingScreen> {
 
   String text;
+
   _BankingScreenState(this.text);
 
   TextEditingController usernameC = new TextEditingController();
   TextEditingController noteC = new TextEditingController();
 
 
-
   List<SearchedUserResponse> item = [];
   Bankingscreen value = items.first;
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -43,7 +43,10 @@ class _BankingScreenState extends State<BankingScreen> {
             child: Column(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.99,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.99,
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.only(top: 10),
                   child: Row(
@@ -82,31 +85,39 @@ class _BankingScreenState extends State<BankingScreen> {
                               value: value, // currently selected item
                               items: items
                                   .map(
-                                      (item) => DropdownMenuItem<Bankingscreen>(
-                                            child: Row(
-                                              children: [
-                                                const SizedBox(width: 10),
-                                                Text(
-                                                  item.title,
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.red),
-                                                ),
-                                              ],
+                                      (item) =>
+                                      DropdownMenuItem<Bankingscreen>(
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              item.title,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.red),
                                             ),
-                                            value: item,
-                                          ))
+                                          ],
+                                        ),
+                                        value: item,
+                                      ))
                                   .toList(),
-                              onChanged: (value) => setState(() {
-                                this.value = value;
-                              }),
+                              onChanged: (value) =>
+                                  setState(() {
+                                    this.value = value;
+                                  }),
                             ),
                           ),
                         ],
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.04,
-                        width: MediaQuery.of(context).size.width * 0.16,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.04,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.16,
                         //color: Color(0xF60D72),
                         child: ElevatedButton(
                           child: Text(
@@ -116,7 +127,7 @@ class _BankingScreenState extends State<BankingScreen> {
                           onPressed: () {
                             //Get.to(BottomNevigation());
 
-                            requestSearchUser(usernameC.text,noteC.text);
+                            requestSearchUser(usernameC.text, noteC.text);
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xfff9A825),
@@ -125,7 +136,7 @@ class _BankingScreenState extends State<BankingScreen> {
                           ),
                         ),
                         decoration: BoxDecoration(
-                            //color: Color(0xF60D72),
+                          //color: Color(0xF60D72),
                             borderRadius: BorderRadius.circular(18)),
                       ),
                     ],
@@ -151,8 +162,14 @@ class _BankingScreenState extends State<BankingScreen> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.07,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.8,
                         child: TextField(
                           keyboardType: TextInputType.text,
                           style: TextStyle(color: Colors.black),
@@ -189,8 +206,14 @@ class _BankingScreenState extends State<BankingScreen> {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height * 0.07,
-                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height * 0.07,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.8,
                         child: TextField(
                           keyboardType: TextInputType.text,
                           style: TextStyle(color: Colors.black),
@@ -230,7 +253,8 @@ class _BankingScreenState extends State<BankingScreen> {
     );
   }
 
-  Widget buildListTile(SearchedUserResponse items) => SingleChildScrollView(
+  Widget buildListTile(SearchedUserResponse items) =>
+      SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -275,53 +299,46 @@ class _BankingScreenState extends State<BankingScreen> {
       );
   String finalToken;
   List<SentMoneyModelResponse> sentmoneyList = [];
-  Future<void> requestSendMoney(String username, String note, String token) async {
 
-    SendMoneyController.requestThenResponsePrint(username,widget.text,note,token).then((response) {
+  Future<void> requestSendMoney(String username, String note,
+      String token) async {
+    SendMoneyController.requestThenResponsePrint(
+        username, widget.text, note, token).then((response) {
       setState(() {
         print(response.statusCode);
         print(response.body);
-
-        if(response.statusCode==200){
+        if (response.statusCode == 200) {
           Get.to(AddMoneySuccessfullPage());
         }
-
       });
     });
-
   }
 
   Future<void> requestSearchUser(String username, String note) async {
-
     final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    await SharedPreferences.getInstance();
     var obtainedToken = sharedPreferences.getString("token");
     setState(() {
       finalToken = obtainedToken;
     });
-
     print(finalToken);
-    SearchUserController.requestThenResponsePrint(username,finalToken).then((response) {
+    SearchUserController.requestThenResponsePrint(username, finalToken).then((
+        response) {
       setState(() {
         print(response.statusCode);
         print(response.body);
-
-        if(response.statusCode==200){
+        if (response.statusCode == 200) {
           // requestSendMoney(usernameC.text,noteC.text);
-
           final Map parsed = json.decode(response.body);
-          SearchedUserResponse searchedUserResponse = SearchedUserResponse.fromJson(parsed['data']);
+          SearchedUserResponse searchedUserResponse = SearchedUserResponse
+              .fromJson(parsed['data']);
           item.clear();
           setState(() {
-          item.add(searchedUserResponse);
+            item.add(searchedUserResponse);
           });
         }
-
       });
     });
-
   }
-
-
 
 }
