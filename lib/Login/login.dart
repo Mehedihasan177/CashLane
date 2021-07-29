@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sharedpreference/constents/constant.dart';
-import 'package:sharedpreference/homepage.dart';
-import 'package:sharedpreference/registration.dart';
 
-import 'login model/login_model.dart';
-import 'login model/login_response.dart';
-import 'login_controller.dart';
+import 'package:sharedpreference/Login/login_model.dart';
+import 'package:sharedpreference/Login/login_response.dart';
+import 'package:sharedpreference/constents/constant.dart';
+import 'package:sharedpreference/Login/login_controller.dart';
+import 'package:sharedpreference/homepage.dart';
+import 'package:sharedpreference/registration/registrationScreen.dart';
+
+
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {

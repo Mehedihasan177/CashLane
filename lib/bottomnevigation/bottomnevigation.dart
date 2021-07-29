@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../activity.dart';
 import '../currency.dart';
 import '../homepage.dart';
-import '../transactionHistory.dart';
+import '../Transaction/transactionHistoryScreen.dart';
 
 class BottomNevigation extends StatefulWidget {
 

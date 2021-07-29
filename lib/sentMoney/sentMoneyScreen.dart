@@ -1,17 +1,21 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sharedpreference/successfulPageCashout.dart';
-import 'changePassword.dart';
-import 'dropdown.dart';
-
-class CashOutPage extends StatefulWidget {
- 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharedpreference/sentMoney/sentMoneySuccessfullPage.dart';
+import 'package:sharedpreference/bankingscreen.dart';
+import 'package:sharedpreference/homepage.dart';
+import 'package:sharedpreference/model/sentMoneyModel.dart';
+import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
+import '../dropdownforCurrenceyPage.dart';
+class AddMoneyScreen extends StatefulWidget {
+  
 
   @override
-  _CashOutPageState createState() => _CashOutPageState();
+  _AddMoneyScreenState createState() => _AddMoneyScreenState();
 }
 
-class _CashOutPageState extends State<CashOutPage> {
+class _AddMoneyScreenState extends State<AddMoneyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +34,6 @@ class _CashOutPageState extends State<CashOutPage> {
   }
 }
 
-
 class Designposition extends StatefulWidget {
   
 
@@ -45,45 +48,41 @@ class _DesignpositionState extends State<Designposition> {
   double equationFontSize = 38.0;
   double resultFontSize = 48.0;
 
-  operation(String btntext){
-
+  operation(String btntext) {
     setState(() {
-      if (btntext == "X"){
+      if (btntext == "X") {
         double equationFontSize = 48.0;
         double resultFontSize = 38.0;
-        equation = equation.substring(0,equation.length - 1);
-        if (equation == ""){
+        equation = equation.substring(0, equation.length - 1);
+        if (equation == "") {
           equation = "0";
         }
-      }
-      else {
+      } else {
         equationFontSize = 48.0;
         resultFontSize = 38.0;
         if (equation == "0") {
           equation = btntext;
-        }
-        else {
+        } else {
           equation = equation + btntext;
         }
       }
     });
   }
-  Widget button (String btntext) {
-    return Expanded(child: RawMaterialButton(
+
+  Widget button(String btntext) {
+    return Expanded(
+        child: RawMaterialButton(
       //padding: EdgeInsets.all(10),
       child: Text(
         "$btntext",
-        style: TextStyle(
-            fontSize: 20,
-            color: Colors.black
-        ),
+        style: TextStyle(fontSize: 20, color: Colors.black),
       ),
       onPressed: () {
         operation(btntext);
       },
-
     ));
   }
+
   NewObject value = items.first;
   @override
   Widget build(BuildContext context) {
@@ -123,15 +122,14 @@ class _DesignpositionState extends State<Designposition> {
                     ),
                   ),
                   onPressed: () {
-                    Get.to(ChangedPassword());
+                    //Get.to(ChangedPassword());
                   },
                 )
               ],
             ),
           ),
-
           Container(
-            padding: EdgeInsets.only(top: 60),
+            padding: EdgeInsets.only(top: 10),
             height: MediaQuery.of(context).size.height * 0.3,
             alignment: Alignment.center,
             child: Column(
@@ -143,12 +141,16 @@ class _DesignpositionState extends State<Designposition> {
                   width: 60,
                   color: Colors.black.withOpacity(0.4),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Container(
                   padding: EdgeInsets.only(top: 60),
                   child: Text(
                     "$equation",
+
                     style: TextStyle(fontSize: 40),
+
                   ),
                 ),
                 Text(
@@ -158,7 +160,9 @@ class _DesignpositionState extends State<Designposition> {
               ],
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             alignment: Alignment.center,
             height: 40,
@@ -171,18 +175,18 @@ class _DesignpositionState extends State<Designposition> {
               value: value, // currently selected item
               items: items
                   .map((item) => DropdownMenuItem<NewObject>(
-                child: Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    Text(
-                      item.title,
-                      style:
-                      TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                  ],
-                ),
-                value: item,
-              ))
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            Text(
+                              item.title,
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        value: item,
+                      ))
                   .toList(),
               onChanged: (value) => setState(() {
                 this.value = value;
@@ -259,34 +263,35 @@ class _DesignpositionState extends State<Designposition> {
           Container(
             padding: EdgeInsets.only(left: 15),
             child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  //color: Color(0xF60D72),
-                  child: ElevatedButton(
-                    child: Text(
-                      "Cash out",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    onPressed: () {
-                      Get.to(SuccessfulCashOut());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xfff9A825),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                    //color: Color(0xF60D72),
+              height: MediaQuery.of(context).size.height * 0.06,
+              width: MediaQuery.of(context).size.width * 0.5,
+              //color: Color(0xF60D72),
+              child: ElevatedButton(
+                child: Text(
+                  "Add Money",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () async{
+
+                  Get.to(AddMoneySuccessfullPage());
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xfff9A825),
+                  shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)),
                 ),
-
+              ),
+              decoration: BoxDecoration(
+                  //color: Color(0xF60D72),
+                  borderRadius: BorderRadius.circular(18)),
+            ),
           ),
         ],
       ),
     );
   }
-}
+
+  }
 
 class rectangleShap extends StatelessWidget {
   
@@ -296,7 +301,7 @@ class rectangleShap extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.86,
+        height: MediaQuery.of(context).size.height * 0.84,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(63),

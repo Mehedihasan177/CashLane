@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sharedpreference/cashoutPage.dart';
-import 'package:sharedpreference/sentMoneyScreen.dart';
-import 'package:sharedpreference/transactionHistory.dart';
+import 'package:sharedpreference/cashOut/cashoutPageScreen.dart';
+import 'package:sharedpreference/sentMoney/sentMoneyScreen.dart';
+import 'package:sharedpreference/Transaction/transactionHistoryScreen.dart';
 
 
 

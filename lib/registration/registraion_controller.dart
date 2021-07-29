@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:sharedpreference/constents/constant.dart';
-import 'package:sharedpreference/model/reg_requst_model.dart';
+import 'package:sharedpreference/registration/reg_requst_model.dart';
 class RegistrationController{
   //this class is for make understand how it works actually
 

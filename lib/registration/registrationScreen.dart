@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:sharedpreference/controllers/registraion_controller.dart';
-import 'package:sharedpreference/model/reg_requst_model.dart';
+import 'package:sharedpreference/registration/registraion_controller.dart';
+import 'package:sharedpreference/registration/reg_requst_model.dart';
 
 
 class Registration extends StatelessWidget {

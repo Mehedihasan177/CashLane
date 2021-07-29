@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sharedpreference/apiManager/cash_out_history.dart';
+import 'package:sharedpreference/cashOut/api_manager_cashout_history.dart';
 
 import 'package:sharedpreference/model/cashoutSuccessfullDocumnet.dart';
 
@@ -13,7 +13,7 @@ class SuccessfulCashOut extends StatefulWidget {
 }
 
 class _SuccessfulCashOutState extends State<SuccessfulCashOut> {
-String token;
+String finalToken;
 
 List<Pending> pending = [];
 
@@ -21,15 +21,15 @@ _getCashoutHistory()async{
   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   var catchtoken = sharedPreferences.getString("token");
   setState(() {
-    token = catchtoken;
+    finalToken = catchtoken;
   });
 
-  print(token);
+  print(finalToken);
 
-  API_ManagerCashOUt().getcashoutData(token).then((value){
+  API_ManagerCashOUt().getcashoutData(finalToken).then((value){
     setState(() {
       Map<String, dynamic> decoded = json.decode("${value.body}");
-      var list = decoded['data'];
+      Iterable list = decoded['data'];
       print(decoded['data']);
       pending = list.map((model) => Pending.fromJson(model)).toList();
       print(pending);

@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sharedpreference/apiManager/sent_money_api_manager.dart';
+import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
+import 'package:sharedpreference/sentMoney/sent_money_api_manager.dart';
 
-import 'apiManager/api_manager_transaction_history.dart';
-import 'model/sentMoneySuccessfullDocument.dart';
-import 'model/transactionHistory_response_model.dart';
+
 
 
 class AddMoneySuccessfullPage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _AddMoneySuccessfullPageState extends State<AddMoneySuccessfullPage> {
   String tToken;
   
   
-  List<Data> datalist = [];
+  List<SentMoneyModelResponse> datalist = [];
   _getSentMoneyHistory() async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
@@ -36,7 +35,7 @@ class _AddMoneySuccessfullPageState extends State<AddMoneySuccessfullPage> {
         Map<String, dynamic> decoded = json.decode("${response.body}");
         Iterable list = decoded['data'];
         print(decoded['data']);
-        datalist = list.map((model) => Data.fromJson(model)).toList();
+        datalist = list.map((model) => SentMoneyModelResponse.fromJson(model)).toList();
         print(tToken);
         print(datalist);
       });

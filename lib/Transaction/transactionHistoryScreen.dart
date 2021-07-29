@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:sharedpreference/model/transactionHistory_response_model.dart';
+import 'package:sharedpreference/Transaction/transactionHistory_response_model.dart';
 
-import 'apiManager/api_manager_transaction_history.dart';
+import 'api_manager_transaction_history.dart';
 
 class Notifications extends StatefulWidget {
   @override

@@ -1,28 +1,15 @@
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sharedpreference/addMoneySuccessfullPage.dart';
-import 'package:sharedpreference/bankingscreen.dart';
-import 'package:sharedpreference/controllers/sent_money_controller.dart';
-import 'package:sharedpreference/homepage.dart';
-import 'package:sharedpreference/model/sentMoneyModel.dart';
-import 'package:sharedpreference/model/sentMoneyModelResponse.dart';
+import 'package:sharedpreference/cashOut/successfulCashoutPageList.dart';
+import '../changePassword.dart';
+import '../dropdownforCurrenceyPage.dart';
 
-import 'dropdown.dart';
-import 'model/sentMoneySuccessfullDocument.dart';
-
-
-class AddMoneyScreen extends StatefulWidget {
-  
-
+class CashOutPage extends StatefulWidget {
   @override
-  _AddMoneyScreenState createState() => _AddMoneyScreenState();
+  _CashOutPageState createState() => _CashOutPageState();
 }
 
-class _AddMoneyScreenState extends State<AddMoneyScreen> {
+class _CashOutPageState extends State<CashOutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,8 +29,6 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
 }
 
 class Designposition extends StatefulWidget {
-  
-
   @override
   _DesignpositionState createState() => _DesignpositionState();
 }
@@ -129,14 +114,14 @@ class _DesignpositionState extends State<Designposition> {
                     ),
                   ),
                   onPressed: () {
-                    //Get.to(ChangedPassword());
+                    Get.to(ChangedPassword());
                   },
                 )
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 60),
             height: MediaQuery.of(context).size.height * 0.3,
             alignment: Alignment.center,
             child: Column(
@@ -155,9 +140,7 @@ class _DesignpositionState extends State<Designposition> {
                   padding: EdgeInsets.only(top: 60),
                   child: Text(
                     "$equation",
-
                     style: TextStyle(fontSize: 40),
-
                   ),
                 ),
                 Text(
@@ -275,45 +258,11 @@ class _DesignpositionState extends State<Designposition> {
               //color: Color(0xF60D72),
               child: ElevatedButton(
                 child: Text(
-                  "Send Money",
+                  "Cash out",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onPressed: () async{
-                  // String finalToken;
-                  // double amount = double.parse(equation);
-                  // print(amount);
-                  // var jsonData = null;
-                  // SharedPreferences sharedPreferences =
-                  // await SharedPreferences.getInstance();
-                  // SentMoneyModel myInfo = new SentMoneyModel(
-                  //     amount: amount.toString());
-                  // await SentMoneyController.requestThenResponsePrint(myInfo)
-                  //     .then((value) async {
-                  //   print(value.statusCode);
-                  //   print(value.body);
-                  //   final Map parsed = json.decode(value.body);
-                  //
-                  //   final sentmoneyobject = SentMoneyModelResponse.fromJson(parsed);
-                  //   print(sentmoneyobject.amount);
-                  //   var obtainedToken = sharedPreferences.getString("token");
-                  //   setState(() {
-                  //     finalToken = obtainedToken;
-                  //   });
-                  //
-                  //   print(finalToken);
-                  //
-                  //   if (value.statusCode == 200) {
-                  //     amount: amount.toString();
-                  //     return Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(builder: (context) => HomePage()),
-                  //     );
-                  //   } else {
-                  //     return SentMoneyController.requestThenResponsePrint(jsonData);
-                  //   }
-                  //
-                  // });
-                  Get.to(AddMoneySuccessfullPage());
+                onPressed: () {
+                  Get.to(SuccessfulCashOut());
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xfff9A825),
@@ -330,12 +279,9 @@ class _DesignpositionState extends State<Designposition> {
       ),
     );
   }
-
-  }
+}
 
 class rectangleShap extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
     return Align(

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sharedpreference/bankingscreen.dart';
 import 'package:sharedpreference/changePassword.dart';
 
-import 'dropdown.dart';
+import 'dropdownforCurrenceyPage.dart';
 
 class Currency extends StatefulWidget {
   
@@ -256,39 +256,17 @@ class _DesignpositionState extends State<Designposition> {
             Container(
               padding: EdgeInsets.only(left: 15),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
                   Container(
                     height: MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.4,
                     //color: Color(0xF60D72),
                     child: ElevatedButton(
                       child: Text(
-                        "Request",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      onPressed: () {
-                        //Get.to(BottomNevigation());
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xfff9A825),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                        //color: Color(0xF60D72),
-                        borderRadius: BorderRadius.circular(18)),
-                  ),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    //color: Color(0xF60D72),
-                    child: ElevatedButton(
-                      child: Text(
-                        "Pay",
+                        "Sent Money",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       onPressed: () {
