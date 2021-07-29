@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sharedpreference/bankingscreen.dart';
 import 'package:sharedpreference/changePassword.dart';
 
-import 'dropdownforCurrenceyPage.dart';
+import '../dropdownforCurrenceyPage.dart';
 
 class Currency extends StatefulWidget {
   
@@ -266,7 +266,7 @@ class _DesignpositionState extends State<Designposition> {
                     //color: Color(0xF60D72),
                     child: ElevatedButton(
                       child: Text(
-                        "Sent Money",
+                        "Send Money",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       onPressed: () {

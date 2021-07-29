@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
+import 'package:sharedpreference/sentMoney/sent_money_controller.dart';
 
 import 'dropdownbankingscreen.dart';
 import 'model/information.dart';
@@ -17,6 +22,10 @@ class _BankingScreenState extends State<BankingScreen> {
 
   String text;
   _BankingScreenState(this.text);
+
+  TextEditingController usernameC = new TextEditingController();
+  TextEditingController noteC = new TextEditingController();
+
 
 
   List<Information> item = List.of(allinformations);
@@ -103,6 +112,8 @@ class _BankingScreenState extends State<BankingScreen> {
                           ),
                           onPressed: () {
                             //Get.to(BottomNevigation());
+
+                            requestSendMoney(usernameC.text,noteC.text);
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xfff9A825),
@@ -140,13 +151,14 @@ class _BankingScreenState extends State<BankingScreen> {
                         height: MediaQuery.of(context).size.height * 0.07,
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: TextField(
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.text,
                           style: TextStyle(color: Colors.black),
                           scrollPadding: EdgeInsets.all(10),
+                          controller: usernameC,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(20),
                             border: InputBorder.none,
-                            hintText: "\$goodwe",
+                            hintText: "Username",
                             hintStyle: TextStyle(
                               fontSize: 18,
                               color: Colors.black87,
@@ -177,13 +189,14 @@ class _BankingScreenState extends State<BankingScreen> {
                         height: MediaQuery.of(context).size.height * 0.07,
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: TextField(
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.text,
                           style: TextStyle(color: Colors.black),
                           scrollPadding: EdgeInsets.all(10),
+                          controller: noteC,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(20),
                             border: InputBorder.none,
-                            hintText: "rent",
+                            hintText: "Note",
                             hintStyle: TextStyle(
                               fontSize: 18,
                               color: Colors.black87,
@@ -194,18 +207,18 @@ class _BankingScreenState extends State<BankingScreen> {
                     ],
                   ),
                 ),
-                SingleChildScrollView(
-                  child: Container(
-                    height: 100,
-                    //padding: EdgeInsets.only(top: 50),
-                    child: ListView.builder(
-                        itemCount: item.length,
-                        itemBuilder: (context, index) {
-                          final items = item[index];
-                          return buildListTile(items);
-                        }),
-                  ),
-                ),
+                // SingleChildScrollView(
+                //   child: Container(
+                //     height: 100,
+                //     //padding: EdgeInsets.only(top: 50),
+                //     child: ListView.builder(
+                //         itemCount: item.length,
+                //         itemBuilder: (context, index) {
+                //           final items = item[index];
+                //           return buildListTile(items);
+                //         }),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -256,4 +269,25 @@ class _BankingScreenState extends State<BankingScreen> {
           ],
         ),
       );
+  String finalToken;
+  List<SentMoneyModelResponse> sentmoneyList = [];
+  Future<void> requestSendMoney(String username, String note) async {
+
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainedToken = sharedPreferences.getString("token");
+    setState(() {
+      finalToken = obtainedToken;
+    });
+
+    print(finalToken);
+    SendMoneyController.requestThenResponsePrint(username,widget.text,note,finalToken).then((response) {
+      setState(() {
+        print(response.statusCode);
+        print(response.body);
+
+      });
+    });
+
+  }
 }

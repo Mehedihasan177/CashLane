@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../activity.dart';
-import '../currency.dart';
+import '../sentMoney/sendMoneyScreen.dart';
 import '../homepage.dart';
 import '../Transaction/transactionHistoryScreen.dart';
 

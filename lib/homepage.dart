@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharedpreference/cashOut/cashoutPageScreen.dart';
-import 'package:sharedpreference/sentMoney/sentMoneyScreen.dart';
+import 'addMoneyScreen.dart';
 import 'package:sharedpreference/Transaction/transactionHistoryScreen.dart';
 
 
@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                         Get.to(Notifications());
                       },
                       child: Text(
-                        "Diposits and transfer",
+                        "Deposit and transfer",
                         style: TextStyle(fontSize: 20),
                       ),
                     ),

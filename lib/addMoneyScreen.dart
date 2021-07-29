@@ -7,7 +7,7 @@ import 'package:sharedpreference/bankingscreen.dart';
 import 'package:sharedpreference/homepage.dart';
 import 'package:sharedpreference/model/sentMoneyModel.dart';
 import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
-import '../dropdownforCurrenceyPage.dart';
+import 'dropdownforCurrenceyPage.dart';
 class AddMoneyScreen extends StatefulWidget {
   
 
