@@ -77,6 +77,12 @@ class _NotificationsState extends State<Notifications> {
                       print("In IF ");
                       print(isGreen);
                       print(datumlist[index].type);
+                    }if(datumlist[index].type.toLowerCase() == "withdraw confirmed") {
+                      isGreen = false;
+                      symbol = "-";
+                      print("In IF ");
+                      print(isGreen);
+                      print(datumlist[index].type);
                     }
                      print("after IF ");
                       print(isGreen);
