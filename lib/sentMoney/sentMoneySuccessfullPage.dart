@@ -101,7 +101,7 @@ class _AddMoneySuccessfullPageState extends State<AddMoneySuccessfullPage> {
                                       style: TextStyle(fontSize: 15, color: isGreen == true ? Colors.green : Colors.red),
                                     ),
                                     Text(
-                                      datumlist[index].details.toString(),
+                                      datumlist[index].comment.toString(),
                                       style: TextStyle(fontSize: 12),
                                     ),
                                     SizedBox(

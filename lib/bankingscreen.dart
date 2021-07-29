@@ -266,7 +266,7 @@ class _BankingScreenState extends State<BankingScreen> {
                 ),
                 onTap: () {
                   //Get.to(DoctorAppointment());
-                  requestSendMoney(items.username, widget.text, finalToken);
+                  requestSendMoney(items.username, noteC.text, finalToken);
                 },
               ),
             ),

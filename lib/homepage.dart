@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharedpreference/cashOut/cashoutPageScreen.dart';
+import 'package:sharedpreference/userDetails/userDetails_controller.dart';
+import 'package:sharedpreference/userDetails/userResponse.dart';
+import 'UserBalance/userBalanceHistory_Controller.dart';
+import 'UserBalance/userBalanceResponseModel.dart';
 import 'addMoneyScreen.dart';
 import 'package:sharedpreference/Transaction/transactionHistoryScreen.dart';
 
@@ -13,6 +20,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  String finalToken = "";
+  UserBalanceResponse getUserResponse;
+
+  Future<void> requestSearchUser() async {
+    final SharedPreferences sharedPreferences =
+    await SharedPreferences.getInstance();
+    var obtainedToken = sharedPreferences.getString("token");
+    setState(() {
+      finalToken = obtainedToken;
+    });
+
+    print(finalToken);
+    UserBalanceController.requestThenResponsePrint(finalToken).then((response) {
+      setState(() {
+        print(response.statusCode);
+        print(response.body);
+
+        if(response.statusCode==200){
+          // requestSendMoney(usernameC.text,noteC.text);
+
+          final Map parsed = json.decode(response.body);
+          setState(() {
+            getUserResponse = UserBalanceResponse.fromJson(parsed['data']);
+            balance = r"$"+getUserResponse.yourCurrentBalance.toString().replaceAll('null', '').toString();
+          });
+        }
+
+      });
+    });
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    requestSearchUser();
+    super.initState();
+  }
+
+  String balance = r"$";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      r"$18.00",
+                      balance,
                       style: TextStyle(fontSize: 40),
                     ),
                     Text(
@@ -63,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       onPressed: () {
-                        Get.to(AddMoneyScreen());
+                        Get.to(AddMoneyScreen(userId: getUserResponse.userDetails.id,));
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xfff9A825),

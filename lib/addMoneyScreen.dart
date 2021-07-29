@@ -1,16 +1,13 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sharedpreference/sentMoney/sentMoneySuccessfullPage.dart';
-import 'package:sharedpreference/bankingscreen.dart';
-import 'package:sharedpreference/homepage.dart';
-import 'package:sharedpreference/model/sentMoneyModel.dart';
-import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
+import 'package:sharedpreference/webviewpage.dart';
 import 'dropdownforCurrenceyPage.dart';
-class AddMoneyScreen extends StatefulWidget {
-  
+import 'constents/constant.dart';
 
+
+class AddMoneyScreen extends StatefulWidget {
+  final int userId;
+  const AddMoneyScreen({Key key, this.userId}) : super(key: key);
   @override
   _AddMoneyScreenState createState() => _AddMoneyScreenState();
 }
@@ -25,7 +22,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
           rectangleShap(),
           Column(
             children: [
-              Designposition(),
+              Designposition(userid: widget.userId,),
             ],
           ),
         ],
@@ -35,8 +32,8 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
 }
 
 class Designposition extends StatefulWidget {
-  
-
+  final int userid;
+  const Designposition({Key key, this.userid}) : super(key: key);
   @override
   _DesignpositionState createState() => _DesignpositionState();
 }
@@ -272,8 +269,9 @@ class _DesignpositionState extends State<Designposition> {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 onPressed: () async{
-
-                  // Get.to(AddMoneySuccessfullPage());
+                  String prepareURL = "$apiDomainRoot/api/recharge/${widget.userid}/$equation";
+                  print(prepareURL);
+                  Get.to(AddMoneyWebview(initialUrl: prepareURL,));
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xfff9A825),
