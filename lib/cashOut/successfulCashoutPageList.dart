@@ -16,6 +16,7 @@ class _SuccessfulCashOutState extends State<SuccessfulCashOut> {
 String finalToken;
 
 List<Pending> pending = [];
+List<Pending> completed = [];
 
 _getCashoutHistory()async{
   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -28,11 +29,21 @@ _getCashoutHistory()async{
 
   API_ManagerCashOUt().getcashoutData(finalToken).then((value){
     setState(() {
+      print(value.body);
       Map<String, dynamic> decoded = json.decode("${value.body}");
-      Iterable list = decoded['data'];
+
+      //pending list
+      Iterable listPending = decoded['data']['Pending'];
       print(decoded['data']);
-      pending = list.map((model) => Pending.fromJson(model)).toList();
+      pending = listPending.map((model) => Pending.fromJson(model)).toList();
       print(pending);
+
+      //completed list
+      Iterable listCompleted = decoded['data']['Completed'];
+      print(decoded['data']);
+      completed = listCompleted.map((model) => Pending.fromJson(model)).toList();
+      print(completed);
+
     });
   });
 }

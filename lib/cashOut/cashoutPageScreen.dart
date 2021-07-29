@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharedpreference/cashOut/successfulCashoutPageList.dart';
 import '../changePassword.dart';
 import '../dropdownforCurrenceyPage.dart';
+import 'cashOutRequestController.dart';
 
 class CashOutPage extends StatefulWidget {
   @override
@@ -10,6 +12,8 @@ class CashOutPage extends StatefulWidget {
 }
 
 class _CashOutPageState extends State<CashOutPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +38,31 @@ class Designposition extends StatefulWidget {
 }
 
 class _DesignpositionState extends State<Designposition> {
+
+  String finalToken = '';
+
+  Future<void> requestSearchUser(String amount) async {
+    final SharedPreferences sharedPreferences =
+    await SharedPreferences.getInstance();
+    var obtainedToken = sharedPreferences.getString("token");
+    setState(() {
+      finalToken = obtainedToken;
+    });
+    print(finalToken);
+    CashoutController.requestThenResponsePrint(amount, finalToken).then((
+        response) {
+      setState(() {
+        print(response.statusCode);
+        print(response.body);
+        if (response.statusCode == 200) {
+          // requestSendMoney(usernameC.text,noteC.text);
+          Get.to(SuccessfulCashOut());
+        }
+      });
+    });
+  }
+
+
   String equation = "0";
   String result = "0";
   String expression = "";
@@ -262,7 +291,7 @@ class _DesignpositionState extends State<Designposition> {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 onPressed: () {
-                  Get.to(SuccessfulCashOut());
+                  requestSearchUser(equation.toString());
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xfff9A825),
