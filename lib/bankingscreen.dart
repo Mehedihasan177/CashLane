@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharedpreference/search/searchUserController.dart';
+import 'package:sharedpreference/search/searchUserResponseModel.dart';
 import 'package:sharedpreference/sentMoney/sentMoneyModelResponse.dart';
 import 'package:sharedpreference/sentMoney/sentMoneySuccessfullPage.dart';
 import 'package:sharedpreference/sentMoney/sent_money_controller.dart';
@@ -29,7 +31,7 @@ class _BankingScreenState extends State<BankingScreen> {
 
 
 
-  List<Information> item = List.of(allinformations);
+  List<SearchedUserResponse> item = [];
   Bankingscreen value = items.first;
   @override
 
@@ -114,7 +116,7 @@ class _BankingScreenState extends State<BankingScreen> {
                           onPressed: () {
                             //Get.to(BottomNevigation());
 
-                            requestSendMoney(usernameC.text,noteC.text);
+                            requestSearchUser(usernameC.text,noteC.text);
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Color(0xfff9A825),
@@ -208,18 +210,18 @@ class _BankingScreenState extends State<BankingScreen> {
                     ],
                   ),
                 ),
-                // SingleChildScrollView(
-                //   child: Container(
-                //     height: 100,
-                //     //padding: EdgeInsets.only(top: 50),
-                //     child: ListView.builder(
-                //         itemCount: item.length,
-                //         itemBuilder: (context, index) {
-                //           final items = item[index];
-                //           return buildListTile(items);
-                //         }),
-                //   ),
-                // ),
+                SingleChildScrollView(
+                  child: Container(
+                    height: 100,
+                    //padding: EdgeInsets.only(top: 50),
+                    child: ListView.builder(
+                        itemCount: item.length,
+                        itemBuilder: (context, index) {
+                          // final items = item[index];
+                          return buildListTile(item[index]);
+                        }),
+                  ),
+                ),
               ],
             ),
           ),
@@ -228,7 +230,7 @@ class _BankingScreenState extends State<BankingScreen> {
     );
   }
 
-  Widget buildListTile(Information items) => SingleChildScrollView(
+  Widget buildListTile(SearchedUserResponse items) => SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -243,7 +245,7 @@ class _BankingScreenState extends State<BankingScreen> {
               child: ListTile(
                 leading: CircleAvatar(
                   radius: 30,
-                  backgroundImage: AssetImage(items.image),
+                  backgroundImage: NetworkImage(items.image.toString()),
                 ),
                 title: Container(
                   alignment: Alignment.centerLeft,
@@ -252,11 +254,11 @@ class _BankingScreenState extends State<BankingScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        items.name,
+                        items.name.toString(),
                         style: TextStyle(fontSize: 22, color: Colors.black),
                       ),
                       Text(
-                        items.nickname,
+                        items.username.toString(),
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ],
@@ -264,6 +266,7 @@ class _BankingScreenState extends State<BankingScreen> {
                 ),
                 onTap: () {
                   //Get.to(DoctorAppointment());
+                  requestSendMoney(items.username, widget.text, finalToken);
                 },
               ),
             ),
@@ -272,17 +275,9 @@ class _BankingScreenState extends State<BankingScreen> {
       );
   String finalToken;
   List<SentMoneyModelResponse> sentmoneyList = [];
-  Future<void> requestSendMoney(String username, String note) async {
+  Future<void> requestSendMoney(String username, String note, String token) async {
 
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
-    var obtainedToken = sharedPreferences.getString("token");
-    setState(() {
-      finalToken = obtainedToken;
-    });
-
-    print(finalToken);
-    SendMoneyController.requestThenResponsePrint(username,widget.text,note,finalToken).then((response) {
+    SendMoneyController.requestThenResponsePrint(username,widget.text,note,token).then((response) {
       setState(() {
         print(response.statusCode);
         print(response.body);
@@ -295,4 +290,38 @@ class _BankingScreenState extends State<BankingScreen> {
     });
 
   }
+
+  Future<void> requestSearchUser(String username, String note) async {
+
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var obtainedToken = sharedPreferences.getString("token");
+    setState(() {
+      finalToken = obtainedToken;
+    });
+
+    print(finalToken);
+    SearchUserController.requestThenResponsePrint(username,finalToken).then((response) {
+      setState(() {
+        print(response.statusCode);
+        print(response.body);
+
+        if(response.statusCode==200){
+          // requestSendMoney(usernameC.text,noteC.text);
+
+          final Map parsed = json.decode(response.body);
+          SearchedUserResponse searchedUserResponse = SearchedUserResponse.fromJson(parsed['data']);
+          item.clear();
+          setState(() {
+          item.add(searchedUserResponse);
+          });
+        }
+
+      });
+    });
+
+  }
+
+
+
 }
